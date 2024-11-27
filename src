@@ -1,0 +1,36 @@
+-- Criação do banco de dados
+CREATE DATABASE IF NOT EXISTS Escola;
+USE Escola;
+
+-- Criação da tabela Estudantes
+CREATE TABLE IF NOT EXISTS Estudante (
+    id_estudante INT AUTO_INCREMENT PRIMARY KEY,  -- Identificador único do estudante
+    nome VARCHAR(150) NOT NULL,                   -- Nome do estudante
+    data_nascimento DATE NOT NULL,                -- Data de nascimento do estudante
+    turma VARCHAR(50) NOT NULL                    -- Nome da turma do estudante
+);
+
+-- Criação da tabela Professores
+CREATE TABLE IF NOT EXISTS Professor (
+    id_professor INT AUTO_INCREMENT PRIMARY KEY,  -- Identificador único do professor
+    nome VARCHAR(150) NOT NULL,                   -- Nome do professor
+    disciplina VARCHAR(100) NOT NULL              -- Disciplina que o professor leciona
+);
+
+-- Criação da tabela Turmas
+CREATE TABLE IF NOT EXISTS Turma (
+    id_turma INT AUTO_INCREMENT PRIMARY KEY,      -- Identificador único da turma
+    nome_turma VARCHAR(50) NOT NULL,               -- Nome da turma
+    id_professor INT NOT NULL,                     -- ID do professor responsável
+    FOREIGN KEY (id_professor) REFERENCES Professor(id_professor) ON DELETE CASCADE  -- Relacionamento com o professor
+);
+
+-- Criação da tabela Notas
+CREATE TABLE IF NOT EXISTS Nota (
+    id_nota INT AUTO_INCREMENT PRIMARY KEY,       -- Identificador único da nota
+    id_estudante INT NOT NULL,                     -- ID do estudante
+    id_turma INT NOT NULL,                         -- ID da turma
+    nota DECIMAL(5, 2) NOT NULL,                   -- Nota do estudante
+    FOREIGN KEY (id_estudante) REFERENCES Estudante(id_estudante) ON DELETE CASCADE,  -- Relacionamento com o estudante
+    FOREIGN KEY (id_turma) REFERENCES Turma(id_turma) ON DELETE CASCADE              -- Relacionamento com a turma
+);
